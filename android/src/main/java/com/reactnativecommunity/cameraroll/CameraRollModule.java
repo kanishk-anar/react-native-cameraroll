@@ -147,8 +147,8 @@ public class CameraRollModule extends ReactContextBaseJavaModule {
         String album = mOptions.getString("album");
         boolean isAlbumPresent = !TextUtils.isEmpty(album);
 
-        // Android Q and above
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        // Android R and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           Uri mediaCollection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
           ContentValues mediaDetails = new ContentValues();
           if (isAlbumPresent) {
@@ -413,9 +413,10 @@ public class CameraRollModule extends ReactContextBaseJavaModule {
           bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, selection.toString());
           bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
                   selectionArgs.toArray(new String[selectionArgs.size()]));
-          bundle.putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS,
-                  new String[]{ Images.Media.DATE_ADDED, Images.Media.DATE_MODIFIED });
-          bundle.putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING);
+          bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, Images.Media.DATE_ADDED + " DESC, " + Images.Media.DATE_MODIFIED + " DESC");
+          // bundle.putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS,
+          //         new String[]{ Images.Media.DATE_ADDED, Images.Media.DATE_MODIFIED });
+          // bundle.putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING);
           bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, mFirst + 1);
           if (!TextUtils.isEmpty(mAfter)) {
             bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, Integer.parseInt(mAfter));
