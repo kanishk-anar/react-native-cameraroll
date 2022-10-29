@@ -664,7 +664,7 @@ public class CameraRollModule extends ReactContextBaseJavaModule {
       image.putNull("fileSize");
     }
 
-    if (includeOrientation) {
+    if (includeOrientation && !media.isNull(orientation)) {
       image.putInt("orientation", media.getInt(orientationIndex));
     } else {
       image.putNull("orientation");
